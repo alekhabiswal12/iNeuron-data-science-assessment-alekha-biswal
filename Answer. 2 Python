@@ -1,0 +1,28 @@
+def highest_frequency_word_length(input_string):
+    words = input_string.split()
+    word_frequency = {}
+
+    for word in words:
+        word_frequency[word] = word_frequency.get(word, 0) + 1
+
+    if not word_frequency:
+        return 0 
+
+    max_frequency = max(word_frequency.values())
+    most_frequent_words = [word for word, frequency in word_frequency.items() if frequency == max_frequency]
+
+    max_length = len(most_frequent_words[0])
+
+    return max_length
+
+input_string = "write write write all the number from from from 1 to 100"
+output = highest_frequency_word_length(input_string)
+print(output)
+
+input_string_1 = "apple orange banana apple orange banana apple orange banana"
+output_1 = highest_frequency_word_length(input_string_1)
+print(output_1)  
+
+input_string_2 = "hello world hello world world hello world"
+output_2 = highest_frequency_word_length(input_string_2)
+print(output_2)  
