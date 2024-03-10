@@ -1,0 +1,45 @@
+SQl
+a)
+| id |     name     |
+|----|--------------|
+|  1 | John Doe     |
+|  4 | Bobby Touls  |
+|  5 | Lisa Ronero  |
+
+
+Explanation:-
+The subquery (SELECT winner_id FROM races) retrieves the list of winner_id values from the races table. Since there is a NULL value in the winner_id column for the "triathalon" race, the subquery would return a result set with at least one NULL value. In SQL, comparisons with NULL values generally don't behave as expected. So, when the main query compares id from runners with winner_id from races, it won't match with NULL, resulting in unexpected behavior.
+
+The result of the query would depend on the SQL database's specific handling of NULL values. Some databases might return an empty result set, while others might return an error.
+
+To avoid this issue, you can rewrite the query using a LEFT JOIN:-
+
+SELECT r.*
+FROM runners r
+LEFT JOIN races ra ON r.id = ra.winner_id
+WHERE ra.winner_id IS NULL;
+
+
+
+b)
+SELECT a.id 
+FROM test_a a 
+LEFT JOIN test_b b ON a.id = b.id 
+WHERE b.id IS NULL;
+
+c)
+SELECT u.username, ut.training_id, COUNT(ut.training_date) AS lesson_count
+FROM users u
+JOIN user_training ut ON u.user_id = ut.user_id
+GROUP BY u.user_id, ut.training_id, ut.training_date
+HAVING COUNT(ut.training_date) > 1
+ORDER BY ut.training_date DESC;
+
+d)
+SELECT Manager_id, 
+       Emp_name AS Manager,
+       AVG(Salary) AS Average_Salary_Under_Manager
+FROM Employee
+WHERE Manager_id IS NOT NULL
+GROUP BY Manager_id, Emp_name
+ORDER BY Manager_id;
